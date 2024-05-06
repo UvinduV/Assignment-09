@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>KITT</title>
+    <style>
+        body{
+            background: #000000;
+        }
+        section{
+            width: fit-content;
+            height: fit-content;
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+
+            text-align: center;
+            font-size: 20px;
+            font-family: sans-serif;
+            color: red;
+        }
+        #light-panel {
+            display: flex;
+            width: fit-content;
+            height: fit-content;
+            margin: auto;
+        }
+        #btn-panel {
+            text-align: center;
+            margin: 20px 0px;
+        }
+        #btn-panel>button{
+            height: 30px;
+            width: 80px;
+            font-size: 15px;
+            margin: 10px;
+        }
+        .light {
+            width: 100px;
+            aspect-ratio: 2/1;
+            border: 2px solid black;
+        }
+        .light-on{
+            background: red;
+            box-shadow: 0px 0px 50px red;
+        }
+        .light-on2{
+            background: red;
+            box-shadow: 0px 0px 50px red;
+            opacity: 50%;
+        }
+
+    </style>
+</head>
+<body>
+<section>
+    <h1>JavaScript Knight Rider</h1>
+    <hr>
+    <div id="light-panel">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+    <hr>
+    <div id="btn-panel">
+        <button type="button" id="start">Start</button>
+        <button type="button" id="stop">Stop</button>
+    </div>
+
+</section>
+
+<audio id="audio" src="assets/audio/audio.mp3"></audio>
+
+<script src="assets/lib/jquery-3.7.1.min.js"></script>
+<script>
+
+    var currentIndex=0;
+    var max_index=7;
+    var move="RIGHT";
+
+    function updateLignt(){
+        $(".light").removeClass("light-on");
+        $(".light").removeClass("light-on2");
+
+        $(".light").eq(currentIndex).addClass("light-on");
+
+        if(move === "RIGHT"){
+            if(currentIndex!==0){$(".light").eq(currentIndex-1).addClass("light-on2");}
+
+            ++currentIndex;
+            if(currentIndex>max_index-2){
+                move="LEFT";
+            }
+        }else{
+            $(".light").eq(currentIndex+1).addClass("light-on2");
+
+            --currentIndex;
+            if(currentIndex===0){
+                move="RIGHT";
+            }
+        }
+
+
+    }
+    $("#start").on('click', () => {
+        myInterval=setInterval(updateLignt,50);
+        $("audio")[0].play();
+    })
+    $("#stop").on('click', () => {
+        clearInterval(myInterval);
+        $("audio")[0].pause();
+    })
+
+</script>
+
+
+</body>
+</html>
